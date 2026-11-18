@@ -7,31 +7,77 @@ body{font-family:Arial;text-align:center}
 .card{display:inline-block;border:1px solid #ccc;padding:15px;margin:10px;border-radius:10px;width:200px}
 img{width:150px;height:150px;object-fit:cover}
 button{background:black;color:white;padding:8px 15px;border:none;border-radius:5px;cursor:pointer}
+#cartBox{border:2px solid black;max-width:400px;margin:20px auto;padding:15px;border-radius:10px;text-align:left}
+.checkout{background:green;width:100%;padding:10px;font-size:16px}
 </style>
 </head>
 <body>
 <h1>Thanu Store</h1>
+<h2>🛒 Cart: <span id="cart">0</span> items | Total: Rs. <span id="total">0</span></h2>
 
 <div class="card">
 <img src="tshirt.avif">
 <h3>T-Shirt</h3>
 <p>Rs. 499</p>
-<button>Add to Cart</button>
+<button onclick="addToCart('T-Shirt', 499)">Add to Cart</button>
 </div>
 
 <div class="card">
 <img src="shoes.avif">
 <h3>Shoes</h3>
 <p>Rs. 999</p>
-<button>Add to Cart</button>
+<button onclick="addToCart('Shoes', 999)">Add to Cart</button>
 </div>
 
 <div class="card">
 <img src="watch.avif">
 <h3>Watch</h3>
 <p>Rs. 1499</p>
-<button>Add to Cart</button>
+<button onclick="addToCart('Watch', 1499)">Add to Cart</button>
 </div>
+
+<div id="cartBox">
+<h3>Your Cart:</h3>
+<p id="cartList">Cart is empty</p>
+<button class="checkout" onclick="checkout()">Checkout</button>
+<button onclick="clearCart()">Clear Cart</button>
+</div>
+
+<script>
+let cartItems = [];
+let total = 0;
+
+function addToCart(item, price){
+  cartItems.push(item + " - Rs." + price);
+  total = total + price;
+  updateCart();
+}
+
+function updateCart(){
+  document.getElementById('cart').innerText = cartItems.length;
+  document.getElementById('total').innerText = total;
+  if(cartItems.length == 0){
+    document.getElementById('cartList').innerText = "Cart is empty";
+  } else {
+    document.getElementById('cartList').innerHTML = cartItems.join("<br>");
+  }
+}
+
+function clearCart(){
+  cartItems = [];
+  total = 0;
+  updateCart();
+}
+
+function checkout(){
+  if(cartItems.length == 0){
+    alert("Cart empty! First add something");
+  } else {
+    alert("Order Placed! Total: Rs." + total);
+    clearCart();
+  }
+}
+</script>
 
 </body>
 </html>
